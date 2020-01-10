@@ -1,4 +1,4 @@
-package com.atahan.dbobjects;
+package com.raspradio.dbobjects;
 
 public class Channels {
 

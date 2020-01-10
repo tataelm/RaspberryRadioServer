@@ -1,7 +1,7 @@
-package com.atahan;
+package com.raspradio;
 
-import com.atahan.dbobjects.Channels;
-import com.atahan.dbobjects.Commands;
+import com.raspradio.dbobjects.Channels;
+import com.raspradio.dbobjects.Commands;
 
 import javax.naming.NamingException;
 import java.io.IOException;

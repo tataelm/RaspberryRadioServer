@@ -1,4 +1,4 @@
-package com.atahan;
+package com.raspradio;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
