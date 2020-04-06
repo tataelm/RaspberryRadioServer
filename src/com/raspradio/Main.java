@@ -15,6 +15,9 @@ public class Main {
     public static List<Channels> LIST_CHANNELS = new ArrayList<>();
     public static Commands COMMANDS = new Commands();
 
+    public static Runtime RUNTIME = Runtime.getRuntime();
+    public static Process PROCESS = null;
+
     public static void main(String[] args) throws SQLException, NamingException {
 
         RadioAdministrator radioAdministrator = new RadioAdministrator();
@@ -23,8 +26,8 @@ public class Main {
 
         String channelUrl = COMMANDS.getChannels().getURL();
         try {
-            String[] command = { "xterm", "-e", "rhythmbox", channelUrl };
-            Runtime.getRuntime().exec(command);
+            String[] command = { "omxplayer", channelUrl};
+            PROCESS = RUNTIME.exec(command);
         } catch (IOException e) {
             e.printStackTrace();
         }

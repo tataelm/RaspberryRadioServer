@@ -2,12 +2,13 @@ package com.raspradio;
 
 import com.raspradio.dbobjects.Channels;
 import com.raspradio.dbobjects.Commands;
+import com.raspradio.Player.OMX;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.TimerTask;
-
-import static java.lang.Runtime.getRuntime;
 
 public class RunningService extends TimerTask {
 
@@ -44,23 +45,13 @@ public class RunningService extends TimerTask {
             System.out.println("mute clicked");
             Main.COMMANDS.setMute(changingCommands.isMute());
 
-            String[] command = null;
-
-            if (changingCommands.isMute())
-            {
-                command = new String[]{"xterm", "-e", "rhythmbox-client", "--set-volume", "0"};
-            }
-            else
-            {
-                command = new String[]{"xterm", "-e", "rhythmbox-client", "--set-volume", "0.5"};
-            }
-
             try {
-                getRuntime().exec(command);
+                OutputStream cmd_out = Main.PROCESS.getOutputStream();
+                cmd_out.write(OMX.PAUSE_RESUME);
+                cmd_out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
         if (Main.COMMANDS.isVolumeDown() != changingCommands.isVolumeDown())
         {
@@ -70,9 +61,11 @@ public class RunningService extends TimerTask {
             ra.setVolumeDown();
 
             try {
-                String[] command = { "xterm", "-e", "rhythmbox-client", "--volume-down" };
-                getRuntime().exec(command);
+                OutputStream cmd_out = Main.PROCESS.getOutputStream();
+                cmd_out.write(OMX.VOLUME_DOWN);
+                cmd_out.flush();
             } catch (IOException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -85,9 +78,11 @@ public class RunningService extends TimerTask {
             ra.setVolumeUp();
 
             try {
-                String[] command = { "xterm", "-e", "rhythmbox-client", "--volume-up" };
-                getRuntime().exec(command);
+                OutputStream cmd_out = Main.PROCESS.getOutputStream();
+                cmd_out.write(OMX.VOLUME_UP);
+                cmd_out.flush();
             } catch (IOException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -97,9 +92,18 @@ public class RunningService extends TimerTask {
             Main.COMMANDS.setChannels(changingCommands.getChannels());
 
             String channelUrl = changingCommands.getChannels().getURL();
+
             try {
-                String[] command = { "xterm", "-e", "rhythmbox", channelUrl };
-                getRuntime().exec(command);
+                /*
+                String[] command1 = {"killall", "omxplayer.bin"};
+                Main.PROCESS = Main.RUNTIME.exec(command1);
+                */
+                OutputStream cmd_out = Main.PROCESS.getOutputStream();
+                cmd_out.write(OMX.EXIT);
+                cmd_out.flush();
+                String[] command = { "omxplayer", channelUrl};
+                Main.PROCESS = Main.RUNTIME.exec(command);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

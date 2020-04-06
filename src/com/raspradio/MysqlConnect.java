@@ -7,10 +7,11 @@ import java.util.Properties;
 
 public class MysqlConnect {
     // init database constants
-    private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
+    //private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";     /* Debug for tataelm                    */
+    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";          /* Debug for uayaz                      */
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/radio";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String USERNAME = "root";                                  /* ! write paspberry phpmyadmin username */
+    private static final String PASSWORD = "";                                      /* ! write paspberry phpmyadmin password */
     private static final String MAX_POOL = "250";
 
     // init connection object
